@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grievance Portal for Urooj 🐾</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #75ade0; /* Bubblegum blue vibe */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #a8c8e7;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 340px;
+      text-align: center;
+    }
+    h2 {
+      color: #0077cc;
+      font-family: 'Pacifico', cursive;
+      font-size: 26px;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+    }
+    input[type="text"], textarea, select {
+      background-color: #f0f8ff;
+    }
+    button {
+      background-color: #66b3ff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3399ff;
+    }
+    .cat-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 3px solid white;
+    }
+    @keyframes floatUp {
+      to {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+    .thank-you {
+      display: none;
+      background-color: #d0f0ff;
+      color: #005c99;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Grievance Portal for Urooj 🐱</h2>
+    <p>Hi baby, you can fill your cute little complaints here 💌</p>
+    <form id="grievance-form" action="https://formspree.io/f/mldbvznd" method="POST">
+      <input type="hidden" name="name" value="Urooj 💕" />
+      <input type="text" name="title" placeholder="Title of Complaint" required />
+      <textarea name="message" placeholder="Write your grievance..." required></textarea>
+      <label>Mood:</label>
+      <select name="mood" required>
+        <option>😡 Angry</option>
+        <option>😢 Sad</option>
+        <option>🥺 Soft</option>
+        <option>😤 Annoyed</option>
+      </select>
+      <label>Severity (1-5):</label>
+      <select name="severity" required>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      <button type="submit" onclick="pop.play()">Submit 💌</button>
+    </form>
+
+    <div class="thank-you" id="thank-you-msg">
+      🥰 Your complaint is filled baby, I'll look for it soon 💖🐾
+    </div>
+  </div>
+
+  <script>
+    const pop = new Audio("https://www.myinstants.com/media/sounds/pop.mp3");
+
+    // Floating hearts animation
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.innerHTML = '💗';
+      heart.style.position = 'fixed';
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.top = '100vh';
+      heart.style.fontSize = '24px';
+      heart.style.animation = 'floatUp 4s linear forwards';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }, 1000);
+
+    // Show thank-you message after form submission
+    document.getElementById("grievance-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          document.getElementById("grievance-form").reset();
+          document.getElementById("thank-you-msg").style.display = "block";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
